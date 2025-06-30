@@ -6,11 +6,12 @@ const cors = require('cors');
 const AuthRoutes = require('./routes/AuthRoutes');
 const UserRoutes = require('./routes/UserRoutes');
 const sequelize = require('./config/DB_Connection');
-const User = require('./models/UsersModel'); // User model import
-const Role = require('./models/RolesModel'); // Role model import
+const User = require('./models/UsersModel');
+const Role = require('./models/RolesModel');
+const Otp = require('./models/OtpModel');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 // Middleware
 app.use(cors());
@@ -22,7 +23,7 @@ const server = http.createServer(app);
 // Initialize Socket.io
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: process.env.CORS_ALLOW,
     methods: ['GET', 'POST'],
   },
 });
@@ -30,7 +31,6 @@ const io = new Server(server, {
 // Store io instance in app for use in routes
 app.set('io', io);
 
-// Socket.io connection
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
 
   socket.on('message', (msg) => {
     console.log('Message received:', msg);
-    io.emit('message', `${socket.id}: ${msg}`); // Broadcast to all clients
+    io.emit('message', `${socket.id}: ${msg}`);
   });
 });
 
@@ -48,14 +48,18 @@ io.on('connection', (socket) => {
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log('✅ MySql DB Connected');
+    console.log(`✅ MySql DB Connected on port ${process.env.DB_PORT || 3307}`);
 
-    await Role.sync({ alter: true }); 
-    await User.sync({ alter: true }); 
+    await sequelize.sync({ alter: true });
     console.log('✅ Tables synced');
   } catch (err) {
-    console.error('❌ DB Error:', err);
-    process.exit(1); // Server crash hone pe exit karo taake nodemon restart kare
+    console.error('❌ DB Error:', err.message);
+    console.error('Error Details:', {
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      error: err,
+    });
+    process.exit(1); 
   }
 })();
 

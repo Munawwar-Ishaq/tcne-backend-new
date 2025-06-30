@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechnoCity Networks - Email Verification</title>
+    <style>
+        /* Reset and Base Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f7fa;
+            color: #1f2a44;
+            line-height: 1.6;
+        }
+        a { color: #3182ce; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+            padding: 20px;
+            text-align: center;
+        }
+        .header img {
+            max-height: 60px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .header img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Content Section */
+        .content {
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 24px;
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .content p {
+            font-size: 15px;
+            color: #4b5563;
+            margin-bottom: 25px;
+        }
+        .otp-display {
+            background: #eef2ff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+        .otp-display strong {
+            font-size: 28px;
+            color: #1e40af;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        /* Button */
+        .action-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+        .action-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #f8fafc;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
+        }
+        .footer a {
+            color: #3182ce;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container { margin: 20px auto; width: 90%; }
+            .content { padding: 20px; }
+            .content h1 { font-size: 20px; }
+            .otp-display strong { font-size: 22px; }
+            .action-button { padding: 10px 20px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Logo -->
+        <div class="header">
+            <img src="https://public.technocitynetworks.com.pk/tcnepng.png" alt="TechnoCity Networks Logo" />
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Welcome to TechnoCity Networks</h1>
+            <p>Thank you for joining us! Please verify your email address by entering the verification code below. This code will expire in 2 minutes.</p>
+            <div class="otp-display">
+                <strong><%= otp || "Not Provided" %></strong>
+            </div>
+            <!-- <a href="#" class="action-button">Verify Email</a> -->
+            <p>If you didn’t request this, please ignore or contact support.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 TechnoCity Networks. All rights reserved.</p>
+            <p>
+                Need assistance? Contact us at 
+                <a href="mailto:support@technocitynetworks.com.pk">support@technocitynetworks.com.pk</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

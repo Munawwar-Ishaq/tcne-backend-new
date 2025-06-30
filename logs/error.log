@@ -1,0 +1,6 @@
+[2025-06-29T12:46:46.114Z] [sendEmail] Error: Error: Greeting never received
+    at SMTPConnection._formatError (C:\Users\Munawwar Ishaq\Desktop\Node JS\Tcnebackend\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._onError (C:\Users\Munawwar Ishaq\Desktop\Node JS\Tcnebackend\node_modules\nodemailer\lib\smtp-connection\index.js:795:20)
+    at Timeout.<anonymous> (C:\Users\Munawwar Ishaq\Desktop\Node JS\Tcnebackend\node_modules\nodemailer\lib\smtp-connection\index.js:729:22)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)

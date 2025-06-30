@@ -11,9 +11,9 @@ const RolesModel = sequelize.define(
       primaryKey: true,
     },
     name: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: false,
     },
     access: {
       type: DataTypes.JSON,
@@ -26,12 +26,14 @@ const RolesModel = sequelize.define(
   {
     tableName: "roles",
     timestamps: true,
+    indexes: [
+      {
+        unique: false,
+        fields: ['name']
+      }
+    ]
   }
 );
 
-// Sync model with database
-(async () => {
-  await RolesModel.sync({ alter: true });
-})();
 
 module.exports = RolesModel;
