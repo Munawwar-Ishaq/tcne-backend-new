@@ -31,20 +31,20 @@ const OtpModel = sequelize.define(
   }
 );
 
-(async () => {
-  cron.schedule("* * * * *", async () => {
-    try {
-      const now = new Date();
-      await OtpModel.destroy({
-        where: {
-          expiresAt: { [Sequelize.Op.lt]: now },
-        },
-      });
-      console.log("Expired OTPs cleaned at:", now);
-    } catch (error) {
-      console.error("Error cleaning expired OTPs:", error);
-    }
-  });
-})();
+// (async () => {
+//   cron.schedule("* * * * *", async () => {
+//     try {
+//       const now = new Date();
+//       await OtpModel.destroy({
+//         where: {
+//           expiresAt: { [Sequelize.Op.lt]: now },
+//         },
+//       });
+//       console.log("Expired OTPs cleaned at:", now);
+//     } catch (error) {
+//       console.error("Error cleaning expired OTPs:", error);
+//     }
+//   });
+// })();
 
 module.exports = OtpModel;

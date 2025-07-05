@@ -1,23 +1,17 @@
-const { OTP_EXPIRY_TIME, VerficationMailTemplateName } = require("../../config/constant");
-const { generateOTP, KarachiDate } = require("../../config/helper");
+const { generateOTP, KarachiDate, OTP_EXPIRY_TIME, VerficationMailTemplateName } = require("../../config/helper");
 const { SendOTPMail } = require("../../Email/SendOTPMail");
 const OtpModel = require("../../models/OtpModel");
 const UserModel = require("../../models/UsersModel");
 const bcryptjs = require("bcryptjs");
+const { Sequelize } = require("sequelize");
 
-const Login = async (req, res) => {
-    const { name, password } = req.body;
+const ResendOtp = async (req, res) => {
+    const { email } = req.body;
 
     try {
-        const user = await UserModel.findOne({ where: { name } });
+        const user = await UserModel.findOne({ where: { email } });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
-        }
-
-        const isPasswordValid = await bcryptjs.compare(password, user.password);
-
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: "Invalid password" });
         }
 
         const karachiNow = KarachiDate();
@@ -25,6 +19,7 @@ const Login = async (req, res) => {
         await OtpModel.destroy({
             where: {
                 email: user.email,
+                expiresAt: { [Sequelize.Op.gt]: karachiNow },
             },
         });
 
@@ -45,13 +40,13 @@ const Login = async (req, res) => {
             templete_file : VerficationMailTemplateName,
         });
 
-        return res.status(200).json({ message: "OTP sent successfully" , email :  user.email });
+        return res.status(200).json({ message: "OTP sent successfully" });
 
     } catch (error) {
         // It's good practice to log the error for debugging, then send a generic message
-        console.error("Login error:", error); // Use console.error for errors
+        console.error("Resend OTP error:", error); // Use console.error for errors
         return res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };
 
-module.exports = Login;
+module.exports = ResendOtp;
